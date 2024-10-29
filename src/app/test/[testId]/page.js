@@ -26,8 +26,11 @@ const getTestData = async (testId) => {
   }
 };
 
+
 const TestPage = async ({ params }) => {
-  const testData = await getTestData(params.testId);
+  const { testId } = await params;
+  const testData = await getTestData(testId);
+
 
   return (
     <div className="flex w-full h-full flex-col justify-start items-start relative">
