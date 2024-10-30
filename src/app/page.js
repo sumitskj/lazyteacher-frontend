@@ -27,7 +27,7 @@ export default function Home() {
         <div className="absolute top-0 left-0 w-full z-10 bg-blue-500 text-white text-center py-3">
           <div>
             This is a FREE tool, with a daily limit of up to 10 generations per
-            user
+            hour
           </div>
         </div>
         <div className="text-5xl font-bold text-black">

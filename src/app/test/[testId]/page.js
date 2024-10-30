@@ -59,7 +59,7 @@ const TestPage = async ({ params }) => {
               return (
                 <>
                   <div
-                    key={q.id}
+                    key={ind}
                     className="w-full flex flex-col justify-start items-start gap-2"
                   >
                     <div className="w-full">{`Q${ind + 1}. ${q.question}`}</div>

@@ -7,6 +7,7 @@ import { sendSucessNotification } from "./NotificationComponent";
 function CopyShareLink() {
   const copyShareUrl = () => {
     let t = `${window.location.href}`;
+    t = t.replace('test', 'questionset');
     navigator.clipboard.writeText(t);
     sendSucessNotification({ message: `Share link copied to clipboard` });
   };
