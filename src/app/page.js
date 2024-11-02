@@ -33,7 +33,7 @@ export default function Home() {
         <div className="text-5xl font-bold text-black">
           Lazzy<span className="text-green-500">Teacher</span>
         </div>
-        <div className="font-light font-sans">
+        <div className="font-light font-sans px-8 text-center">
           Hey you lazy, create your questions on any topic in just one click
         </div>
         <LandingPage />

@@ -26,6 +26,29 @@ const getTestData = async (testId) => {
   }
 };
 
+const getLinksForSitemap = async () => {
+  try {
+    const res = await fetchBackendApiWrapper(
+      `/sitemap`,
+      {
+        method: "GET",
+        cache: "no-store",
+      },
+      null
+    );
+    if (res && res.ok) {
+      const testData = await res.json();
+      return testData;
+    } else if (res.status === 429) {
+      throw new Error("429: Rate Limit Error");
+    } else {
+      throw new Error("");
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
 export async function generateMetadata({ params }) {
   // Fetch post data
   const { setId } = await params;
@@ -70,6 +93,7 @@ export async function generateMetadata({ params }) {
 const QuestionSetPage = async ({ params }) => {
   const { setId } = await params;
   const testData = await getTestData(setId);
+  const otherLinks = await getLinksForSitemap();
 
   return (
     <div className="flex w-full h-full flex-col justify-start items-start relative">
@@ -81,7 +105,7 @@ const QuestionSetPage = async ({ params }) => {
           <CopyShareLink />
         </div>
       </div>
-      <div className="grid grid-cols-4 justify-start items-start w-full pt-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 justify-start items-start w-full pt-6 px-8">
         <div className="col-span-1 w-full"></div>
         <div className="col-span-2 flex flex-col justify-start items-start gap-8 w-full">
           {testData && testData.length > 0 && (
@@ -100,8 +124,8 @@ const QuestionSetPage = async ({ params }) => {
             challenge learners, ensuring a strong grasp on the topics. <br />
             These questions will really help letting you know whether you have a
             good grasp on topics or not, as they are not just made by humans who
-            try to make same type of questions every time, its our AI that covers
-            every corner of the topic and tests you thoroughly and is
+            try to make same type of questions every time, its our AI that
+            covers every corner of the topic and tests you thoroughly and is
             unpredictable as to what questions it can make, something that no
             one has uncovered until now.
           </h4>
@@ -138,6 +162,29 @@ const QuestionSetPage = async ({ params }) => {
               );
             })}
           <div className="py-8"></div>
+          <div className="pt-10">
+            <h3 className="font-bold">More Questions</h3>
+            <div className="grid grid-cols-2 gap-4 w-full justify-between items-start pt-8 pb-20">
+              {otherLinks &&
+                otherLinks
+                  .filter((x) => x.topic.length > 0)
+                  .map((l, v) => {
+                    return (
+                      <div
+                        key={v}
+                        className="flex flex-col justify-start items-start w-full"
+                      >
+                        <Link
+                          href={"/questionset/" + l.testId}
+                          className="underline text-gray-600 text-sm"
+                        >
+                          {l.topic} {l.bookName ? " from " + l.bookName : ""}
+                        </Link>
+                      </div>
+                    );
+                  })}
+            </div>
+          </div>
         </div>
         <div className="col-span-1 w-full"></div>
       </div>
