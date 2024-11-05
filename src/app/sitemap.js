@@ -58,7 +58,7 @@ export default async function sitemap({ id }) {
   // Google's limit is 50,000 URLs per sitemap
   const links = await getLinksForSitemap(id);
   return links.map((l) => ({
-    url: `${EXTERNAL_DATA_URL}/questionset/${l.testId}`,
+    url: `https://www.lazzyteacher.com/questionset/${l.testId}`,
     lastModified: l.createdAt,
   }));
 }
